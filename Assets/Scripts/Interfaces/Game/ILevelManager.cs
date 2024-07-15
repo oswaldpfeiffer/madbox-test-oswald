@@ -1,4 +1,6 @@
+using UnityEngine;
+
 public interface ILevelManager
 {
-    public IHeroController GetHero();
+    IEnemyController GetClosestEnemy(Vector3 position);
 }

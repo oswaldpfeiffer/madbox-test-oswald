@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public interface IControllable
 {
     void SetMovementDirection(float x, float y);

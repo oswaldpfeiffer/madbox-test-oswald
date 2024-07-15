@@ -5,8 +5,13 @@ using UnityEngine;
 public class HeroView : MonoBehaviour, IHeroView
 {
     [SerializeField] Animator _animator;
-    [SerializeField] Transform _moveableTransform;
     [SerializeField] Transform _rotatingTransform;
+    [SerializeField] Transform _weaponSlot;
+
+    public Transform MoveableTransform { get ; set; }
+
+    private GameObject _weaponObject;
+
 
     public void DisplayHealthBar(bool display)
     {
@@ -15,12 +20,12 @@ public class HeroView : MonoBehaviour, IHeroView
 
     public void Initialize()
     {
-        throw new System.NotImplementedException();
+        MoveableTransform = GetComponent<Transform>();
     }
 
     public void Move(Vector3 vec, float rotationAngle)
     {
-        _moveableTransform.position += vec;
+        MoveableTransform.position += vec;
         _rotatingTransform.localEulerAngles = new Vector3(0, rotationAngle, 0);
     }
 
@@ -32,5 +37,13 @@ public class HeroView : MonoBehaviour, IHeroView
     public void UpdateHealthBar(float ratio)
     {
         throw new System.NotImplementedException();
+    }
+
+    public void UpdateWeaponModel(GameObject weaponModel)
+    {
+        if (_weaponObject) Destroy(_weaponObject);
+        _weaponObject = Instantiate(weaponModel, _weaponSlot);
+        _weaponObject.transform.localPosition = new Vector3(0, 0, 0);
+        _weaponObject.transform.localEulerAngles = new Vector3(0, 0, 0);
     }
 }

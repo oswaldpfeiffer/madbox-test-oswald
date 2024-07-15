@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class EnemyView : MonoBehaviour, IEnemyView
 {
+    [SerializeField] Transform _rotatingTransform;
+    public Transform MoveableTransform { get; set; }
+
     public void DisplayHealthBar(bool display)
     {
         throw new System.NotImplementedException();
@@ -11,7 +14,15 @@ public class EnemyView : MonoBehaviour, IEnemyView
 
     public void Initialize()
     {
-        throw new System.NotImplementedException();
+        MoveableTransform = GetComponent<Transform>();
+    }
+
+    public void LookAtHero(IHeroController hero)
+    {
+        if (hero != null)
+        {
+            _rotatingTransform.LookAt(hero.GetPositionTransform());
+        }
     }
 
     public void UpdateHealthBar(float ratio)

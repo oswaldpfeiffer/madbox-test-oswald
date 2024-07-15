@@ -13,6 +13,7 @@ public class LevelManager : SingletonBaseClass<LevelManager>, ILevelManager
     [SerializeField] private SOEnemyData _enemyData;
 
     private IEnemiesManager _enemiesManager;
+    private IWeaponsManager _weaponsManager;
     private IHeroController _heroController;
 
     private SOLevelData _levelData;
@@ -20,45 +21,50 @@ public class LevelManager : SingletonBaseClass<LevelManager>, ILevelManager
 
     private void Start()
     {
-        LoadLevelData();
+        _enemiesManager = GetComponent(typeof(IEnemiesManager)) as IEnemiesManager;
+        _weaponsManager = GetComponent(typeof(IWeaponsManager)) as IWeaponsManager;
+        InitLevelData();
+        InitWeapons();
     }
 
-    private void LoadLevelData()
+    private void InitLevelData()
     {
         int levelIndex = ServiceLocator.Instance.GetService<IPersistentDataManager>().GetCurrentLevel();
         _levelData = _levelsData[levelIndex % _levelsData.Count];
-
-        _enemiesManager = _enemiesManagerHolder.GetComponent(typeof(IEnemiesManager)) as IEnemiesManager;
-        _enemiesManager.Initialize(_levelData, OnLevelInitialized);
     }
 
-    private void OnLevelInitialized()
+    private void InitWeapons()
+    {
+        _weaponsManager.Initialize(OnWeaponsInitialized);
+    }
+    private void OnWeaponsInitialized()
+    {
+        _enemiesManager.Initialize(_levelData, OnEnemiesInitialized);
+    }
+
+    private void OnEnemiesInitialized()
     {
         InitPlayer();
-        // InitEnemies();
+        SpawnEnemies();
     }
 
     private void InitPlayer()
     {
         _heroController = _heroInstance.GetComponent(typeof(IHeroController)) as IHeroController;
         IHeroModel heroModel = new HeroModel();
-        _heroController.Initialize(heroModel, _heroHealth);
+        _heroController.Initialize(heroModel, _heroHealth, this as ILevelManager, _weaponsManager);
+        _heroController.EquipWeapon(_weaponsManager.PickWeaponRandomly());
         ServiceLocator.Instance.GetService<IInputsManager>().SetControllable(_heroController);
     }
 
-    private void InitEnemies()
+    private void SpawnEnemies()
     {
         _enemies = _enemiesManager.SpawnEnemies(_heroController, _levelData);
     }
 
-    public IEnemyController GetCloserEnemy (Vector3 position)
+    public IEnemyController GetClosestEnemy(Vector3 position)
     {
 
         return null;
-    }
-
-    public IHeroController GetHero ()
-    {
-        return _heroController;
     }
 }

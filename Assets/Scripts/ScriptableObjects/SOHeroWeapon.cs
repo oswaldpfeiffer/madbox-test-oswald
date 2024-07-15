@@ -7,6 +7,7 @@ public class SOHeroWeapon : ScriptableObject
 {
     public string PrefabAddressable;
     public Sprite Preview;
+    public float Damages;
     public float AttackSpeed;
     public float AttackInterval;
     public float MovementSpeed;

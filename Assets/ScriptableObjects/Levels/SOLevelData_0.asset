@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemySO: {fileID: 11400000, guid: b6562650268bdda45baef1ce1fff3656, type: 2}
   EnemiesAmount: 20
-  MinXSpawn: 10
-  MaxXSpawn: 30
-  MinYSpawn: 10
-  MaxYSpawn: 30
+  MinXSpawn: 5
+  MaxXSpawn: 20
+  MinYSpawn: 5
+  MaxYSpawn: 20

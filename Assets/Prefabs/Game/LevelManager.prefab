@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8989230092315785997}
   - component: {fileID: 8989230092315785996}
+  - component: {fileID: 6963225683620012161}
+  - component: {fileID: 434368626732088}
   m_Layer: 0
   m_Name: LevelManager
   m_TagString: Untagged
@@ -49,3 +51,31 @@ MonoBehaviour:
   _heroInstance: {fileID: 0}
   _heroHealth: {fileID: 11400000, guid: 36cf2d6142ad83d48aa8c5c77e1d72ae, type: 2}
   _enemyData: {fileID: 11400000, guid: b6562650268bdda45baef1ce1fff3656, type: 2}
+--- !u!114 &6963225683620012161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8989230092315785998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e433633e3e9ebd4683ba937188f701d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &434368626732088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8989230092315785998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 451bd446fde311341b1a90292b3bcd83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _weapons:
+  - {fileID: 11400000, guid: 4967841901a7bde41bcf71edddaeef99, type: 2}
+  - {fileID: 11400000, guid: b134e10e6fdaf0f479a9728c44344165, type: 2}
+  - {fileID: 11400000, guid: 057423f1aae11754d8ee934890bd0cdd, type: 2}

@@ -28,6 +28,18 @@ public class HeroController : MonoBehaviour, IHeroController
         throw new System.NotImplementedException();
     }
 
+    public void SetIsMoving(bool moving)
+    {
+        _view.SetMovement(moving);
+    }
+
+    public void SetMovementDirection(float x, float y)
+    {
+        Vector3 moveVector = _model.GetMoveVector(x, y);
+        float lookAngle = _model.GetLookAngle(x, y);
+        _view.Move(moveVector, lookAngle);
+    }
+
     public void TakeDamage(int damages)
     {
         throw new System.NotImplementedException();

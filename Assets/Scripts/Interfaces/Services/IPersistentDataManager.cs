@@ -7,4 +7,7 @@ public interface IPersistentDataManager : IService
     int GetInt(string key, int defaultValue);
     string GetString(string key, string defaultValue);
     float GetFloat(string key, float defaultValue);
+
+    int GetCurrentLevel();
+    void SetCurrentLevel(int level);
 }

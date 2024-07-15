@@ -21,32 +21,38 @@ MonoBehaviour:
     m_Address: CombatScene
     m_ReadOnly: 0
     m_SerializedLabels: []
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
+    m_MainAsset: {fileID: 102900000, guid: 497bc75c48d5d474bb15705b9a89a449, type: 3}
+    m_TargetAsset: {fileID: 102900000, guid: 497bc75c48d5d474bb15705b9a89a449, type: 3}
   - m_GUID: fe189c0006577944eaa12ec9bdff3f0f
     m_Address: UI Atlas
     m_ReadOnly: 0
     m_SerializedLabels: []
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
+    m_MainAsset: {fileID: 4343727234628468602, guid: fe189c0006577944eaa12ec9bdff3f0f, type: 2}
+    m_TargetAsset: {fileID: 4343727234628468602, guid: fe189c0006577944eaa12ec9bdff3f0f, type: 2}
   - m_GUID: bac79aa2a0057e5429a664d3f336da3d
     m_Address: LongSword
     m_ReadOnly: 0
     m_SerializedLabels: []
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
+    m_MainAsset: {fileID: 15448191510330147, guid: bac79aa2a0057e5429a664d3f336da3d, type: 3}
+    m_TargetAsset: {fileID: 15448191510330147, guid: bac79aa2a0057e5429a664d3f336da3d, type: 3}
   - m_GUID: 17cf6e9fc28f3a544bc062d510f66f4a
     m_Address: GreatSword
     m_ReadOnly: 0
     m_SerializedLabels: []
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
+    m_MainAsset: {fileID: 478356759475107179, guid: 17cf6e9fc28f3a544bc062d510f66f4a, type: 3}
+    m_TargetAsset: {fileID: 478356759475107179, guid: 17cf6e9fc28f3a544bc062d510f66f4a, type: 3}
   - m_GUID: 4d0814cafad460246890ec829fa7071d
     m_Address: CurvedSword
     m_ReadOnly: 0
     m_SerializedLabels: []
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
+    m_MainAsset: {fileID: 6937623146161485751, guid: 4d0814cafad460246890ec829fa7071d, type: 3}
+    m_TargetAsset: {fileID: 6937623146161485751, guid: 4d0814cafad460246890ec829fa7071d, type: 3}
+  - m_GUID: 41e04faa14fb7a34e8b16750ec910fc3
+    m_Address: Enemy_Bee
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 1358921057130329688, guid: 41e04faa14fb7a34e8b16750ec910fc3, type: 3}
+    m_TargetAsset: {fileID: 1358921057130329688, guid: 41e04faa14fb7a34e8b16750ec910fc3, type: 3}
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 2c2a01d9444a5c343a774372540cda35, type: 2}
   m_SchemaSet:

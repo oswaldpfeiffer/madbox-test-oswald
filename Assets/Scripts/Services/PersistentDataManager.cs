@@ -33,4 +33,14 @@ public class PersistentDataManager : BaseService<IPersistentDataManager>, IPersi
     {
         return PlayerPrefs.GetFloat(key, defaultValue);
     }
+
+    public int GetCurrentLevel()
+    {
+        return GetInt(PlayerPrefKeys.KEY_LEVEL, 0);
+    }
+
+    public void SetCurrentLevel(int level)
+    {
+        SaveInt(PlayerPrefKeys.KEY_LEVEL, level);
+    }
 }

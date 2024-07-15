@@ -7,4 +7,5 @@ public interface IHeroModel : IModel, IDamageableModel
     GameObject GetEquipedWeaponModel(IWeaponsManager weaponManager);
     Vector3 GetMoveVector(float x, float y);
     float GetLookAngle(float x, float y);
+    bool IsEnemyInRange(Transform hero, IEnemyController enemy);
 }

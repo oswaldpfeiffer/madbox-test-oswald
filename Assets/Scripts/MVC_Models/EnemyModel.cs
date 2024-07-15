@@ -1,4 +1,5 @@
 public class EnemyModel : IEnemyModel
 {
-    public int Health { get ; set; }
+    public float Health { get ; set; }
+    public bool IsAlive { get; set; }
 }

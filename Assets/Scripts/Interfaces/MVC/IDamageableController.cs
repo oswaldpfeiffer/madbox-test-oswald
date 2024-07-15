@@ -4,6 +4,6 @@ public interface IDamageableController
 {
     Transform GetPositionTransform();
     void InitLife(SOHealth health);
-    void TakeDamage(int damages);
+    void TakeDamage(float damages);
     void Die();
 }

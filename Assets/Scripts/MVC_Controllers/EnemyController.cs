@@ -19,7 +19,7 @@ public class EnemyController : MonoBehaviour, IEnemyController
 
     public void Die()
     {
-        throw new System.NotImplementedException();
+        _model.IsAlive = false;
     }
 
     public void Dispose()
@@ -36,11 +36,16 @@ public class EnemyController : MonoBehaviour, IEnemyController
 
     public void InitLife(SOHealth health)
     {
-        throw new System.NotImplementedException();
+        _model.Health = health.MaxLife;
     }
 
-    public void TakeDamage(int damages)
+    public void TakeDamage(float damages)
     {
-        throw new System.NotImplementedException();
+        if (!_model.IsAlive) return;
+        _model.Health -= damages;
+        if (_model.Health <= 0)
+        {
+            Die();
+        }
     }
 }

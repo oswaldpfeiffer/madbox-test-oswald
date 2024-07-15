@@ -1,4 +1,5 @@
 public interface IDamageableModel
 {
-    int Health { get; set; }
+    float Health { get; set; }
+    bool IsAlive { get; set; }
 }

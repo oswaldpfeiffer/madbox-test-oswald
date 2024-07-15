@@ -64,7 +64,17 @@ public class LevelManager : SingletonBaseClass<LevelManager>, ILevelManager
 
     public IEnemyController GetClosestEnemy(Vector3 position)
     {
-
-        return null;
+        float closest = Mathf.Infinity;
+        IEnemyController closestEnemy = null;
+        foreach(IEnemyController enemy in _enemies)
+        {
+            float dist = (position - enemy.GetPositionTransform().transform.position).magnitude;
+            if (dist < closest)
+            {
+                closest = dist;
+                closestEnemy = enemy;
+            }
+        }
+        return closestEnemy;
     }
 }

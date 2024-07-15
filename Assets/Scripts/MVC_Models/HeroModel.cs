@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class HeroModel : IHeroModel
 {
-    public int Health { get; set; }
+    public float Health { get; set; }
+    public bool IsAlive { get; set; }
     public bool IsMoving { get ; set ; }
     public SOHeroWeapon EquippedWeapon { get ; set ; }
 
@@ -22,5 +23,12 @@ public class HeroModel : IHeroModel
     {
         if (EquippedWeapon == null) return null;
         return weaponManager.GetModelForWeaponSO(EquippedWeapon);
+    }
+
+    public bool IsEnemyInRange(Transform hero, IEnemyController enemy)
+    {
+        float dist = (hero.transform.position - enemy.GetPositionTransform().transform.position).magnitude;
+        if (EquippedWeapon == null) return false;
+        return dist <= EquippedWeapon.AttackRange;
     }
 }

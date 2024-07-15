@@ -46,4 +46,10 @@ public class HeroView : MonoBehaviour, IHeroView
         _weaponObject.transform.localPosition = new Vector3(0, 0, 0);
         _weaponObject.transform.localEulerAngles = new Vector3(0, 0, 0);
     }
+
+    public void PlayAttackAnimation (IEnemyController enemy)
+    {
+        _rotatingTransform.LookAt(enemy.GetPositionTransform());
+        _animator.SetTrigger(AnimatorParameters.HERO_ATTACK);
+    }
 }

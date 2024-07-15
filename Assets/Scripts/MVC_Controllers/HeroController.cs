@@ -16,12 +16,16 @@ public class HeroController : MonoBehaviour, IHeroController
         if (_model != null && !_model.IsMoving)
         {
             _closestEnemy = _levelManager.GetClosestEnemy(_view.MoveableTransform.position);
+            if (_closestEnemy != null && _model.IsEnemyInRange(GetPositionTransform(), _closestEnemy))
+            {
+                AttackClosestEnemy();
+            }
         }
     }
 
     public void Die()
     {
-        throw new System.NotImplementedException();
+        _model.IsAlive = false;
     }
 
     public void Dispose()
@@ -51,7 +55,7 @@ public class HeroController : MonoBehaviour, IHeroController
 
     public void InitLife(SOHealth health)
     {
-        throw new System.NotImplementedException();
+        _model.Health = health.MaxLife;
     }
 
     public void SetIsMoving(bool moving)
@@ -67,8 +71,27 @@ public class HeroController : MonoBehaviour, IHeroController
         _view.Move(moveVector, lookAngle);
     }
 
-    public void TakeDamage(int damages)
+    public void TakeDamage(float damages)
     {
-        throw new System.NotImplementedException();
+        if (!_model.IsAlive) return;
+        _model.Health -= damages;
+        if (_model.Health <= 0)
+        {
+            Die();
+        }
+    }
+
+    public void AttackClosestEnemy()
+    {
+        _view.PlayAttackAnimation(_closestEnemy);
+    }
+
+    public void ReceiveAnimatorEvent (EAnimationAction action)
+    {
+        if (action == EAnimationAction.Attack)
+        {
+            _closestEnemy.TakeDamage(_model.EquippedWeapon.Damages);
+        }
+        Debug.Log(action + " EXECUTED !");
     }
 }

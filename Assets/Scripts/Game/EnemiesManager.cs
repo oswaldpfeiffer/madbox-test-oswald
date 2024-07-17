@@ -7,6 +7,9 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class EnemiesManager : MonoBehaviour, IEnemiesManager
 {
+    [SerializeField] private float _minDistBetweenEnemies;
+    [SerializeField] private float _maxRecursionsForEnemiesSpawnPosition;
+
     private ILogger _logger;
 
     private Dictionary<string, GameObject> _enemyPrefabs = new Dictionary<string, GameObject>();
@@ -37,6 +40,7 @@ public class EnemiesManager : MonoBehaviour, IEnemiesManager
 
     public List<IEnemyController> SpawnEnemies(IHeroController hero, SOLevelData levelData)
     {
+        List<Vector3> spawnedEnemyPositions = new List<Vector3>();
         List<IEnemyController> enemies = new List<IEnemyController>();
         GameObject enemy = _enemyPrefabs[levelData.EnemySO.PrefabAddressable];
         if (enemy != null)
@@ -44,6 +48,19 @@ public class EnemiesManager : MonoBehaviour, IEnemiesManager
             for(int i = 0; i < levelData.EnemiesAmount; i++)
             {
                 Vector3 pos = GetRandomPositionOnMap(levelData);
+                for (int j = 0; j < _maxRecursionsForEnemiesSpawnPosition; j++)
+                {
+                    if (!IsTooCloseToOtherEnemies(pos, spawnedEnemyPositions))
+                    {
+                        break;
+                    } else
+                    {
+                        if (j == _maxRecursionsForEnemiesSpawnPosition - 1)
+                            _logger.Log($"Could not find a good position for enemy #{i}", ELogLevel.Info);
+                    }
+                    pos = GetRandomPositionOnMap(levelData);
+                }
+                spawnedEnemyPositions.Add(pos);
                 GameObject go = Instantiate(enemy, pos, Quaternion.identity, null);
                 IEnemyController controller = go.GetComponent(typeof(IEnemyController)) as IEnemyController;
                 IEnemyModel model = new EnemyModel();
@@ -63,4 +80,15 @@ public class EnemiesManager : MonoBehaviour, IEnemiesManager
         return new Vector3(x, 0, y);
     }
 
+    private bool IsTooCloseToOtherEnemies(Vector3 position, List<Vector3> spawnedEnemyPositions)
+    {
+        foreach (Vector3 otherPosition in spawnedEnemyPositions)
+        {
+            if (Vector3.Distance(position, otherPosition) < _minDistBetweenEnemies)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }

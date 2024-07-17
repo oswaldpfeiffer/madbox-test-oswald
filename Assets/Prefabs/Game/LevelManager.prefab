@@ -47,7 +47,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _levelsData:
   - {fileID: 11400000, guid: 1d266aa1c073b9743be1d4fcd4c3d952, type: 2}
-  _enemiesManagerHolder: {fileID: 0}
   _heroInstance: {fileID: 0}
   _heroData: {fileID: 11400000, guid: fc9adddcf920e4303a0d4481b1c62163, type: 2}
   _enemyData: {fileID: 11400000, guid: b6562650268bdda45baef1ce1fff3656, type: 2}
@@ -63,6 +62,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e433633e3e9ebd4683ba937188f701d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _minDistBetweenEnemies: 3
+  _maxRecursionsForEnemiesSpawnPosition: 5
 --- !u!114 &434368626732088
 MonoBehaviour:
   m_ObjectHideFlags: 0

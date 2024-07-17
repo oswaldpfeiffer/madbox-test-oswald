@@ -15,12 +15,15 @@ public class HeroView : MonoBehaviour, IHeroView
 
     public IHealthBar HealthBar { get; set; }
 
-    
 
-    public void DisplayHealthBar(bool display)
+    public void UpdateHealthBar(float ratio)
     {
-        throw new System.NotImplementedException();
+        if (HealthBar != null)
+        {
+            HealthBar.SetFillAmount(ratio);
+        }
     }
+
 
     public void Initialize()
     {
@@ -37,11 +40,6 @@ public class HeroView : MonoBehaviour, IHeroView
     {
         AnimatorUtil.ResetAnimatorTriggers(_animator);
         _animator.SetTrigger(move ? AnimatorParameters.HERO_RUN : AnimatorParameters.HERO_IDLE);
-    }
-
-    public void UpdateHealthBar(float ratio)
-    {
-        throw new System.NotImplementedException();
     }
 
     public void UpdateWeaponModel(GameObject weaponModel, float movementSpeedFactor, float attackSpeedFactor)

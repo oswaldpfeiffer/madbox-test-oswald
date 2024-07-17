@@ -24,9 +24,9 @@ public class SceneManager : BaseService<ISceneManager>, ISceneManager
         LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
     }
 
-    public void LoadHUDScreen ()
+    public void LoadHUDScreen (Action onComplete = null)
     {
-        LoadSceneAdditive(_hudSceneIndex);
+        LoadSceneAdditive(_hudSceneIndex, onComplete);
     }
 
     public void LoadScene(int sceneIndex, Action onComplete = null)

@@ -10,6 +10,9 @@ public class HeroController : MonoBehaviour, IHeroController
     private ILevelManager _levelManager;
     private IWeaponsManager _weaponsManager;
     private IEnemyController _closestEnemy;
+    private IAudioManager _audioManager;
+
+
 
     void Update ()
     {
@@ -48,21 +51,38 @@ public class HeroController : MonoBehaviour, IHeroController
         return _view.MoveableTransform;
     }
 
-    public void Initialize(IHeroModel model, SOHeroData data, ILevelManager levelManager, IWeaponsManager weaponManager)
+    public void Initialize(IHeroModel model, SOHeroData data, ILevelManager levelManager, IWeaponsManager weaponManager, IAudioManager audioManager)
     {
         _model = model;
         _view = GetComponent(typeof(IHeroView)) as IHeroView;
         _view.Initialize();
         _weaponsManager = weaponManager;
         _levelManager = levelManager;
+        _audioManager = audioManager;
         _model.HeroData = data;
         InitLife(data.HealthSO);
+
+        EventBus.OnPlayerHealthBarLoaded += RegisterHealthBar;
+        EventBus.TriggerOnPlayerInitialized();
+    }
+
+    private void RegisterHealthBar (IHealthBar healthbar)
+    {
+        _view.HealthBar = healthbar;
+        _view.UpdateHealthBar(_model.Health / _model.MaxHealth);
+    }
+
+
+    private void OnDisable()
+    {
+        EventBus.OnPlayerHealthBarLoaded -= RegisterHealthBar;
     }
 
     public void EquipWeapon (SOHeroWeapon weapon)
     {
         _model.EquippedWeapon = weapon;
         _view.UpdateWeaponModel(_model.GetEquipedWeaponModel(_weaponsManager), _model.EquippedWeapon.MovementSpeedFactor, _model.EquippedWeapon.AttackSpeedFactor);
+        EventBus.TriggerOnWeaponEquipped(weapon);
     }
 
     public void InitLife(SOHealth health)
@@ -89,6 +109,7 @@ public class HeroController : MonoBehaviour, IHeroController
     {
         if (!_model.IsAlive) return;
         _model.Health -= damages;
+        _view.UpdateHealthBar(_model.Health / _model.MaxHealth);
         if (_model.Health <= 0)
         {
             Die();
@@ -107,6 +128,7 @@ public class HeroController : MonoBehaviour, IHeroController
         {
             _closestEnemy.TakeDamage(_model.EquippedWeapon.Damages);
             _view.SpawnDamageHit(_closestEnemy, _model.EquippedWeapon);
+            _audioManager.PlayAudioClip(EAudioClip.Hit);
         }
     }
 }

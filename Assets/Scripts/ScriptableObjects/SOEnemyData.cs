@@ -9,4 +9,6 @@ public class SOEnemyData : ScriptableObject
     public SOHealth HealthSO;
     public int AttackForce;
     public float AttackFrequency;
+    public float MoveSpeed;
+    public float AttackDistance;
 }

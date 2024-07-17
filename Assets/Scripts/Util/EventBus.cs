@@ -11,6 +11,9 @@ public static class EventBus
     public static event Action OnNextLevel;
     public static event Action OnLevelWin;
     public static event Action OnLevelFail;
+    public static event Action OnPlayerInitialized;
+    public static event Action<IHealthBar> OnPlayerHealthBarLoaded;
+    public static event Action<SOHeroWeapon> OnWeaponEquipped;
 
     public static void TriggerGameStateChanged(EGameState state)
     {
@@ -36,7 +39,18 @@ public static class EventBus
     {
         OnLevelFail?.Invoke();
     }
-
+    public static void TriggerPlayerHealthBarLoaded(IHealthBar healthbar)
+    {
+        OnPlayerHealthBarLoaded?.Invoke(healthbar);
+    }
+    public static void TriggerOnWeaponEquipped(SOHeroWeapon weapon)
+    {
+        OnWeaponEquipped?.Invoke(weapon);
+    }
+    public static void TriggerOnPlayerInitialized()
+    {
+        OnPlayerInitialized?.Invoke();
+    }
     /*
     // Generic events alternative, more practical but less explicit...
 

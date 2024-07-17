@@ -15,6 +15,7 @@ public class LevelManager : SingletonBaseClass<LevelManager>, ILevelManager
     private IWeaponsManager _weaponsManager;
     private IHeroController _heroController;
     private ISceneManager _sceneManager;
+    private IAudioManager _audioManager;
 
     private SOLevelData _levelData;
     private List<IEnemyController> _enemies;
@@ -24,9 +25,14 @@ public class LevelManager : SingletonBaseClass<LevelManager>, ILevelManager
         _enemiesManager = GetComponent(typeof(IEnemiesManager)) as IEnemiesManager;
         _weaponsManager = GetComponent(typeof(IWeaponsManager)) as IWeaponsManager;
         _sceneManager = ServiceLocator.Instance.GetService<ISceneManager>();
+        _audioManager = ServiceLocator.Instance.GetService<IAudioManager>();
+        _sceneManager.LoadHUDScreen(OnHUDLoaded);
+    }
+
+    private void OnHUDLoaded ()
+    {
         InitLevelData();
         InitWeapons();
-        _sceneManager.LoadHUDScreen();
     }
 
     private void InitLevelData()
@@ -54,7 +60,7 @@ public class LevelManager : SingletonBaseClass<LevelManager>, ILevelManager
     {
         _heroController = _heroInstance.GetComponent(typeof(IHeroController)) as IHeroController;
         IHeroModel heroModel = new HeroModel();
-        _heroController.Initialize(heroModel, _heroData, this as ILevelManager, _weaponsManager);
+        _heroController.Initialize(heroModel, _heroData, this as ILevelManager, _weaponsManager, _audioManager);
         _heroController.EquipWeapon(_weaponsManager.PickWeaponRandomly());
         ServiceLocator.Instance.GetService<IInputsManager>().SetControllable(_heroController);
     }

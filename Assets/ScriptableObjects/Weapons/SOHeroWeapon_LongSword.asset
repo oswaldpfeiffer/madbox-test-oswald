@@ -15,7 +15,9 @@ MonoBehaviour:
   PrefabAddressable: LongSword
   Preview: {fileID: 21300000, guid: 84242e5756f854c41a854d14937ab2cf, type: 3}
   Damages: 20
-  AttackSpeed: 1
-  AttackInterval: 2
-  MovementSpeed: 4
+  AttackSpeedFactor: 1.2
+  AttackCoolDown: 1.25
+  MovementSpeedFactor: 1.1
   AttackRange: 4
+  HitFX: {fileID: 2230199235582439938, guid: 086965b92ce1be7418524db6cacccb4c, type: 3}
+  DamageHitColor: {r: 0, g: 1, b: 0.005834818, a: 1}

@@ -7,11 +7,15 @@ public class HeroView : MonoBehaviour, IHeroView
     [SerializeField] Animator _animator;
     [SerializeField] Transform _rotatingTransform;
     [SerializeField] Transform _weaponSlot;
+    [SerializeField] HitSpawner _hitSpawner;
 
     public Transform MoveableTransform { get ; set; }
 
     private GameObject _weaponObject;
 
+    public IHealthBar HealthBar { get; set; }
+
+    
 
     public void DisplayHealthBar(bool display)
     {
@@ -40,12 +44,14 @@ public class HeroView : MonoBehaviour, IHeroView
         throw new System.NotImplementedException();
     }
 
-    public void UpdateWeaponModel(GameObject weaponModel)
+    public void UpdateWeaponModel(GameObject weaponModel, float movementSpeedFactor, float attackSpeedFactor)
     {
         if (_weaponObject) Destroy(_weaponObject);
         _weaponObject = Instantiate(weaponModel, _weaponSlot);
         _weaponObject.transform.localPosition = new Vector3(0, 0, 0);
         _weaponObject.transform.localEulerAngles = new Vector3(0, 0, 0);
+        _animator.SetFloat(AnimatorParameters.HERO_MOVESPEEDFACTOR, movementSpeedFactor);
+        _animator.SetFloat(AnimatorParameters.HERO_ATTACKSPEEDFACTOR, attackSpeedFactor);
     }
 
     public void PlayAttackAnimation (IEnemyController enemy)
@@ -62,5 +68,10 @@ public class HeroView : MonoBehaviour, IHeroView
     public void PlayDieAnimation()
     {
 
+    }
+
+    public void SpawnDamageHit (IDamageableController controller, SOHeroWeapon weapon)
+    {
+        _hitSpawner.Spawn(controller, weapon);
     }
 }

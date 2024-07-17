@@ -13,6 +13,7 @@ public class EnemyController : MonoBehaviour, IEnemyController
         if (_model.IsAlive)
         {
             _view.LookAtHero(_hero);
+            _view.UpdateHealthBar(_model.Health / _model.MaxHealth);
         }
     }
     public Transform GetPositionTransform()
@@ -24,6 +25,8 @@ public class EnemyController : MonoBehaviour, IEnemyController
     {
         _model.IsAlive = false;
         _view.PlayDieAnimation();
+        _view.UpdateHealthBar(0f);
+        Destroy(this.gameObject, 3f);
     }
 
     public bool IsAlive ()
@@ -48,6 +51,7 @@ public class EnemyController : MonoBehaviour, IEnemyController
     public void InitLife(SOHealth health)
     {
         _model.Health = health.MaxLife;
+        _model.MaxHealth = health.MaxLife;
         _model.IsAlive = true;
     }
 
@@ -55,7 +59,6 @@ public class EnemyController : MonoBehaviour, IEnemyController
     {
         if (!_model.IsAlive) return;
         _model.Health -= damages;
-        Debug.Log("TAKE DAMAGE " + damages);
         if (_model.Health <= 0)
         {
             Die();

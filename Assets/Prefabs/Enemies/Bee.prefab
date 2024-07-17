@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 297763066410921876}
   - component: {fileID: 8007772486299865986}
   - component: {fileID: 6987307172062759776}
+  - component: {fileID: 2903861867956608113}
   m_Layer: 0
   m_Name: Bee
   m_TagString: Untagged
@@ -59,6 +60,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rotatingTransform: {fileID: 6926839794863012759}
   _animator: {fileID: 6926839794853975167}
+  _skinnedMeshRenderer: {fileID: 6926839794849704639}
+  _blinker: {fileID: 2903861867956608113}
+  HealthBarPrefab: {fileID: 6833032901415353740, guid: ad50a0e1ae3c5487a9bfe86f99331859, type: 3}
+--- !u!114 &2903861867956608113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1358921057130329688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 817bd4e2340d44c1d8b152e01683298b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skinnedMesh: {fileID: 6926839794849704639}
+  DecreaseFactor: 5
 --- !u!1 &6926839794863368101
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,7 +15,9 @@ MonoBehaviour:
   PrefabAddressable: CurvedSword
   Preview: {fileID: 21300000, guid: 6a3250ecbd8e33c4191a059a0925d76e, type: 3}
   Damages: 10
-  AttackSpeed: 1
-  AttackInterval: 1
-  MovementSpeed: 5
+  AttackSpeedFactor: 1.5
+  AttackCoolDown: 0.7
+  MovementSpeedFactor: 1.2
   AttackRange: 2
+  HitFX: {fileID: 6213619859274339249, guid: a91e28b1b0a4d894b807f161a6177b65, type: 3}
+  DamageHitColor: {r: 1, g: 0.7327189, b: 0, a: 1}

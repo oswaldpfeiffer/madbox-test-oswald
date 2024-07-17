@@ -1,5 +1,6 @@
 public enum EAudioClip
 {
     Click,
-    Cancel
+    Cancel,
+    Hit
 }

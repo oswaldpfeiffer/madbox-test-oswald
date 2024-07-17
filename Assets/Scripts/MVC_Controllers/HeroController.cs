@@ -13,13 +13,18 @@ public class HeroController : MonoBehaviour, IHeroController
 
     void Update ()
     {
-        if (_model != null && !_model.IsMoving)
+        CheckNearbyEnemies();
+    }
+
+    private void CheckNearbyEnemies ()
+    {
+        if (_model == null) return;
+        if (_model.IsMoving) return;
+        if (Time.time < (_model.LastAttackTime + _model.EquippedWeapon.AttackCoolDown)) return;
+        _closestEnemy = _levelManager.GetClosestEnemy(_view.MoveableTransform.position);
+        if (_closestEnemy != null && _model.IsEnemyInRange(GetPositionTransform(), _closestEnemy))
         {
-            _closestEnemy = _levelManager.GetClosestEnemy(_view.MoveableTransform.position);
-            if (_closestEnemy != null && _model.IsEnemyInRange(GetPositionTransform(), _closestEnemy))
-            {
-                AttackClosestEnemy();
-            }
+            AttackClosestEnemy();
         }
     }
 
@@ -43,26 +48,28 @@ public class HeroController : MonoBehaviour, IHeroController
         return _view.MoveableTransform;
     }
 
-    public void Initialize(IHeroModel model, SOHealth health, ILevelManager levelManager, IWeaponsManager weaponManager)
+    public void Initialize(IHeroModel model, SOHeroData data, ILevelManager levelManager, IWeaponsManager weaponManager)
     {
         _model = model;
         _view = GetComponent(typeof(IHeroView)) as IHeroView;
         _view.Initialize();
         _weaponsManager = weaponManager;
         _levelManager = levelManager;
-        InitLife(health);
+        _model.HeroData = data;
+        InitLife(data.HealthSO);
     }
 
     public void EquipWeapon (SOHeroWeapon weapon)
     {
         _model.EquippedWeapon = weapon;
-        _view.UpdateWeaponModel(_model.GetEquipedWeaponModel(_weaponsManager));
+        _view.UpdateWeaponModel(_model.GetEquipedWeaponModel(_weaponsManager), _model.EquippedWeapon.MovementSpeedFactor, _model.EquippedWeapon.AttackSpeedFactor);
     }
 
     public void InitLife(SOHealth health)
     {
         _model.Health = health.MaxLife;
         _model.IsAlive = true;
+        _model.MaxHealth = health.MaxLife;
     }
 
     public void SetIsMoving(bool moving)
@@ -91,6 +98,7 @@ public class HeroController : MonoBehaviour, IHeroController
     public void AttackClosestEnemy()
     {
         _view.PlayAttackAnimation(_closestEnemy);
+        _model.LastAttackTime = Time.time;
     }
 
     public void ReceiveAnimatorEvent (EAnimationAction action)
@@ -98,6 +106,7 @@ public class HeroController : MonoBehaviour, IHeroController
         if (action == EAnimationAction.Attack)
         {
             _closestEnemy.TakeDamage(_model.EquippedWeapon.Damages);
+            _view.SpawnDamageHit(_closestEnemy, _model.EquippedWeapon);
         }
     }
 }

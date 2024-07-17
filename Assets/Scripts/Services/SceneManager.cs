@@ -6,6 +6,7 @@ using UnityEngine;
 public class SceneManager : BaseService<ISceneManager>, ISceneManager
 {
     [SerializeField] private int _menuSceneIndex;
+    [SerializeField] private int _hudSceneIndex;
 
     void Start()
     {
@@ -21,6 +22,11 @@ public class SceneManager : BaseService<ISceneManager>, ISceneManager
     private void ReloadCurrentScene ()
     {
         LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void LoadHUDScreen ()
+    {
+        LoadSceneAdditive(_hudSceneIndex);
     }
 
     public void LoadScene(int sceneIndex, Action onComplete = null)

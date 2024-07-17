@@ -49,7 +49,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1d266aa1c073b9743be1d4fcd4c3d952, type: 2}
   _enemiesManagerHolder: {fileID: 0}
   _heroInstance: {fileID: 0}
-  _heroHealth: {fileID: 11400000, guid: 36cf2d6142ad83d48aa8c5c77e1d72ae, type: 2}
+  _heroData: {fileID: 11400000, guid: fc9adddcf920e4303a0d4481b1c62163, type: 2}
   _enemyData: {fileID: 11400000, guid: b6562650268bdda45baef1ce1fff3656, type: 2}
 --- !u!114 &6963225683620012161
 MonoBehaviour:

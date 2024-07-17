@@ -15,7 +15,9 @@ MonoBehaviour:
   PrefabAddressable: GreatSword
   Preview: {fileID: 21300000, guid: d1106f097fc603044ab9662ac9b6ea55, type: 3}
   Damages: 30
-  AttackSpeed: 1
-  AttackInterval: 2
-  MovementSpeed: 3
+  AttackSpeedFactor: 1.05
+  AttackCoolDown: 1.5
+  MovementSpeedFactor: 1
   AttackRange: 3
+  HitFX: {fileID: 8748687995501502678, guid: 62334a566bbfe3945bc7bd0c02ca1c9e, type: 3}
+  DamageHitColor: {r: 1, g: 0, b: 0.13333334, a: 1}

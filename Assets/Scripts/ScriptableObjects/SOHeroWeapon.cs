@@ -8,8 +8,12 @@ public class SOHeroWeapon : ScriptableObject
     public string PrefabAddressable;
     public Sprite Preview;
     public float Damages;
-    public float AttackSpeed;
-    public float AttackInterval;
-    public float MovementSpeed;
+    [Range(0.5f, 1.5f)]
+    public float AttackSpeedFactor;
+    public float AttackCoolDown;
+    [Range(0.5f, 1.5f)]
+    public float MovementSpeedFactor;
     public float AttackRange;
+    public GameObject HitFX;
+    public Color DamageHitColor;
 }

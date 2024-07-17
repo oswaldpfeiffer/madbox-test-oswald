@@ -2,14 +2,17 @@ using UnityEngine;
 
 public class HeroModel : IHeroModel
 {
+    public SOHeroData HeroData { get; set; }
+    public float LastAttackTime { get; set; }
     public float Health { get; set; }
     public bool IsAlive { get; set; }
     public bool IsMoving { get ; set ; }
     public SOHeroWeapon EquippedWeapon { get ; set ; }
+    public float MaxHealth { get; set; }
 
     public Vector3 GetMoveVector(float x, float y)
     {
-       float speed = EquippedWeapon == null ? 0 : EquippedWeapon.MovementSpeed;
+       float speed = EquippedWeapon == null ? 0 : HeroData.MovementBaseSpeed * EquippedWeapon.MovementSpeedFactor;
        return new Vector3(x, 0, y).normalized * Time.deltaTime * speed;
     }
 

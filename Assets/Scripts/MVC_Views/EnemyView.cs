@@ -7,15 +7,20 @@ public class EnemyView : MonoBehaviour, IEnemyView
     [SerializeField] Transform _rotatingTransform;
     public Transform MoveableTransform { get; set; }
     [SerializeField] Animator _animator;
+    [SerializeField] SkinnedMeshRenderer _skinnedMeshRenderer;
+    [SerializeField] Blinker _blinker;
 
-    public void DisplayHealthBar(bool display)
-    {
-        throw new System.NotImplementedException();
-    }
+    [SerializeField] GameObject HealthBarPrefab;
+    public IHealthBar HealthBar { get; set; }
 
     public void Initialize()
     {
         MoveableTransform = GetComponent<Transform>();
+        if (HealthBarPrefab)
+        {
+            GameObject health = Instantiate(HealthBarPrefab, this.transform);
+            HealthBar = health.GetComponent(typeof(IHealthBar)) as IHealthBar;
+        }
     }
 
     public void LookAtHero(IHeroController hero)
@@ -28,17 +33,28 @@ public class EnemyView : MonoBehaviour, IEnemyView
 
     public void UpdateHealthBar(float ratio)
     {
-        throw new System.NotImplementedException();
+        if (HealthBar != null)
+        {
+            HealthBar.SetFillAmount(ratio);
+            HealthBar.SetVisible(ratio > 0 && IsMeshVisible());
+        }
     }
 
 
     public void PlayHitAnimation()
     {
         _animator.SetTrigger(AnimatorParameters.ENEMY_BEE_DAMAGE);
+        _blinker.Blink();
     }
 
     public void PlayDieAnimation()
     {
         _animator.SetTrigger(AnimatorParameters.ENEMY_BEE_DIE);
+        _blinker.Blink();
+    }
+
+    private bool IsMeshVisible ()
+    {
+        return _skinnedMeshRenderer.isVisible;
     }
 }

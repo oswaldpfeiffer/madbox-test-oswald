@@ -6,15 +6,15 @@ public class LevelManager : SingletonBaseClass<LevelManager>, ILevelManager
 {
     [SerializeField] private List<SOLevelData> _levelsData;
 
-    [SerializeField] private GameObject _enemiesManagerHolder;
     [SerializeField] private GameObject _heroInstance;
 
-    [SerializeField] private SOHealth _heroHealth;
+    [SerializeField] private SOHeroData _heroData;
     [SerializeField] private SOEnemyData _enemyData;
 
     private IEnemiesManager _enemiesManager;
     private IWeaponsManager _weaponsManager;
     private IHeroController _heroController;
+    private ISceneManager _sceneManager;
 
     private SOLevelData _levelData;
     private List<IEnemyController> _enemies;
@@ -23,8 +23,10 @@ public class LevelManager : SingletonBaseClass<LevelManager>, ILevelManager
     {
         _enemiesManager = GetComponent(typeof(IEnemiesManager)) as IEnemiesManager;
         _weaponsManager = GetComponent(typeof(IWeaponsManager)) as IWeaponsManager;
+        _sceneManager = ServiceLocator.Instance.GetService<ISceneManager>();
         InitLevelData();
         InitWeapons();
+        _sceneManager.LoadHUDScreen();
     }
 
     private void InitLevelData()
@@ -52,7 +54,7 @@ public class LevelManager : SingletonBaseClass<LevelManager>, ILevelManager
     {
         _heroController = _heroInstance.GetComponent(typeof(IHeroController)) as IHeroController;
         IHeroModel heroModel = new HeroModel();
-        _heroController.Initialize(heroModel, _heroHealth, this as ILevelManager, _weaponsManager);
+        _heroController.Initialize(heroModel, _heroData, this as ILevelManager, _weaponsManager);
         _heroController.EquipWeapon(_weaponsManager.PickWeaponRandomly());
         ServiceLocator.Instance.GetService<IInputsManager>().SetControllable(_heroController);
     }

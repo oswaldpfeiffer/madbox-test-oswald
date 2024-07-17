@@ -58,6 +58,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rotatingTransform: {fileID: 6926839794863012759}
+  _animator: {fileID: 6926839794853975167}
 --- !u!1 &6926839794863368101
 GameObject:
   m_ObjectHideFlags: 0

@@ -50,6 +50,7 @@ public class HeroController : MonoBehaviour, IHeroController
         _view.Initialize();
         _weaponsManager = weaponManager;
         _levelManager = levelManager;
+        InitLife(health);
     }
 
     public void EquipWeapon (SOHeroWeapon weapon)
@@ -61,6 +62,7 @@ public class HeroController : MonoBehaviour, IHeroController
     public void InitLife(SOHealth health)
     {
         _model.Health = health.MaxLife;
+        _model.IsAlive = true;
     }
 
     public void SetIsMoving(bool moving)

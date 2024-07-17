@@ -47,7 +47,7 @@ public class EnemiesManager : MonoBehaviour, IEnemiesManager
                 GameObject go = Instantiate(enemy, pos, Quaternion.identity, null);
                 IEnemyController controller = go.GetComponent(typeof(IEnemyController)) as IEnemyController;
                 IEnemyModel model = new EnemyModel();
-                controller.Initialize(hero, model);
+                controller.Initialize(hero, model, levelData.EnemySO.HealthSO);
                 enemies.Add(controller);
             }
         }

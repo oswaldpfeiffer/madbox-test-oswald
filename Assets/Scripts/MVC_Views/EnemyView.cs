@@ -6,6 +6,7 @@ public class EnemyView : MonoBehaviour, IEnemyView
 {
     [SerializeField] Transform _rotatingTransform;
     public Transform MoveableTransform { get; set; }
+    [SerializeField] Animator _animator;
 
     public void DisplayHealthBar(bool display)
     {
@@ -33,11 +34,11 @@ public class EnemyView : MonoBehaviour, IEnemyView
 
     public void PlayHitAnimation()
     {
-
+        _animator.SetTrigger(AnimatorParameters.ENEMY_BEE_DAMAGE);
     }
 
     public void PlayDieAnimation()
     {
-
+        _animator.SetTrigger(AnimatorParameters.ENEMY_BEE_DIE);
     }
 }

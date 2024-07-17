@@ -46,7 +46,8 @@ public class EnemiesManager : MonoBehaviour, IEnemiesManager
                 Vector3 pos = GetRandomPositionOnMap(levelData);
                 GameObject go = Instantiate(enemy, pos, Quaternion.identity, null);
                 IEnemyController controller = go.GetComponent(typeof(IEnemyController)) as IEnemyController;
-                controller.Initialize(hero);
+                IEnemyModel model = new EnemyModel();
+                controller.Initialize(hero, model);
                 enemies.Add(controller);
             }
         }

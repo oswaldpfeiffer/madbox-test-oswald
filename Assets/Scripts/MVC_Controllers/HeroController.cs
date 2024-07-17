@@ -28,6 +28,11 @@ public class HeroController : MonoBehaviour, IHeroController
         _model.IsAlive = false;
     }
 
+    public bool IsAlive()
+    {
+        return _model.IsAlive;
+    }
+
     public void Dispose()
     {
         throw new System.NotImplementedException();
@@ -92,6 +97,5 @@ public class HeroController : MonoBehaviour, IHeroController
         {
             _closestEnemy.TakeDamage(_model.EquippedWeapon.Damages);
         }
-        Debug.Log(action + " EXECUTED !");
     }
 }

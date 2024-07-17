@@ -31,6 +31,7 @@ public class HeroView : MonoBehaviour, IHeroView
 
     public void SetMovement(bool move)
     {
+        AnimatorUtil.ResetAnimatorTriggers(_animator);
         _animator.SetTrigger(move ? AnimatorParameters.HERO_RUN : AnimatorParameters.HERO_IDLE);
     }
 
@@ -51,5 +52,15 @@ public class HeroView : MonoBehaviour, IHeroView
     {
         _rotatingTransform.LookAt(enemy.GetPositionTransform());
         _animator.SetTrigger(AnimatorParameters.HERO_ATTACK);
+    }
+
+    public void PlayHitAnimation ()
+    {
+        
+    }
+
+    public void PlayDieAnimation()
+    {
+
     }
 }

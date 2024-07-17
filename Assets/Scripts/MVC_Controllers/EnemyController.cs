@@ -22,13 +22,19 @@ public class EnemyController : MonoBehaviour, IEnemyController
         _model.IsAlive = false;
     }
 
+    public bool IsAlive ()
+    {
+        return _model.IsAlive;
+    }
+
     public void Dispose()
     {
         throw new System.NotImplementedException();
     }
 
-    public void Initialize(IHeroController hero)
+    public void Initialize(IHeroController hero, IEnemyModel model)
     {
+        _model = model;
         _view = GetComponent(typeof(IEnemyView)) as IEnemyView;
         _view.Initialize();
         _hero = hero;
@@ -46,6 +52,9 @@ public class EnemyController : MonoBehaviour, IEnemyController
         if (_model.Health <= 0)
         {
             Die();
+        } else
+        {
+
         }
     }
 }

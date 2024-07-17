@@ -29,4 +29,15 @@ public class EnemyView : MonoBehaviour, IEnemyView
     {
         throw new System.NotImplementedException();
     }
+
+
+    public void PlayHitAnimation()
+    {
+
+    }
+
+    public void PlayDieAnimation()
+    {
+
+    }
 }

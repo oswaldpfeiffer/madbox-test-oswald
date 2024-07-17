@@ -68,11 +68,14 @@ public class LevelManager : SingletonBaseClass<LevelManager>, ILevelManager
         IEnemyController closestEnemy = null;
         foreach(IEnemyController enemy in _enemies)
         {
-            float dist = (position - enemy.GetPositionTransform().transform.position).magnitude;
-            if (dist < closest)
+            if (enemy.IsAlive())
             {
-                closest = dist;
-                closestEnemy = enemy;
+                float dist = (position - enemy.GetPositionTransform().transform.position).magnitude;
+                if (dist < closest)
+                {
+                    closest = dist;
+                    closestEnemy = enemy;
+                }
             }
         }
         return closestEnemy;

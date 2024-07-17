@@ -1,4 +1,4 @@
 public interface IEnemyController : IController, IDamageableController
 {
-    void Initialize(IHeroController hero); 
+    void Initialize(IHeroController hero, IEnemyModel model); 
 }

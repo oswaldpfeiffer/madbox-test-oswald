@@ -6,4 +6,5 @@ public interface IDamageableController
     void InitLife(SOHealth health);
     void TakeDamage(float damages);
     void Die();
+    bool IsAlive();
 }

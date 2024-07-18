@@ -556,6 +556,7 @@ MonoBehaviour:
   _rotatingTransform: {fileID: 2148928661061455951}
   _weaponSlot: {fileID: 1993995369825730728}
   _hitSpawner: {fileID: 4346751255455863852}
+  _blinker: {fileID: 7180797108929684962}
 --- !u!114 &4346751255455863852
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelManager : SingletonBaseClass<LevelManager>, ILevelManager
+public class LevelManager : MonoBehaviour, ILevelManager
 {
     [SerializeField] private List<SOLevelData> _levelsData;
 
@@ -16,6 +16,7 @@ public class LevelManager : SingletonBaseClass<LevelManager>, ILevelManager
     private IHeroController _heroController;
     private ISceneManager _sceneManager;
     private IAudioManager _audioManager;
+    private IInputsManager _inputsManager;
 
     private SOLevelData _levelData;
     private List<IEnemyController> _enemies;
@@ -26,7 +27,13 @@ public class LevelManager : SingletonBaseClass<LevelManager>, ILevelManager
         _weaponsManager = GetComponent(typeof(IWeaponsManager)) as IWeaponsManager;
         _sceneManager = ServiceLocator.Instance.GetService<ISceneManager>();
         _audioManager = ServiceLocator.Instance.GetService<IAudioManager>();
-        _sceneManager.LoadHUDScreen(OnHUDLoaded);
+        _inputsManager = ServiceLocator.Instance.GetService<IInputsManager>();
+        _sceneManager.LoadSceneAdditive(ScenesIndexing.SCENE_HUD, OnHUDLoaded);
+    }
+
+    void OnDisable ()
+    {
+        _inputsManager.RemoveControlable();
     }
 
     private void OnHUDLoaded ()
@@ -62,7 +69,7 @@ public class LevelManager : SingletonBaseClass<LevelManager>, ILevelManager
         IHeroModel heroModel = new HeroModel();
         _heroController.Initialize(heroModel, _heroData, this as ILevelManager, _weaponsManager, _audioManager);
         _heroController.EquipWeapon(_weaponsManager.PickWeaponRandomly());
-        ServiceLocator.Instance.GetService<IInputsManager>().SetControllable(_heroController);
+        _inputsManager.SetControllable(_heroController);
     }
 
     private void SpawnEnemies()

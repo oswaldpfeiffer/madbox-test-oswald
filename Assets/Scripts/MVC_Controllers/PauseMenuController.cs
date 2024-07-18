@@ -43,6 +43,7 @@ public class PauseMenuController : IPauseMenuController
     {
         _audioManager.PlayAudioClip(EAudioClip.Click);
         TogglePauseMenu(false);
+        UnityEngine.Time.timeScale = 1;
         EventBus.TriggerOpenMainMenu();
     }
 
@@ -79,6 +80,7 @@ public class PauseMenuController : IPauseMenuController
 
     public void TogglePauseMenu(bool state)
     {
+        UpdateModel();
         UpdateView();
         _view.Toggle(state);
     }

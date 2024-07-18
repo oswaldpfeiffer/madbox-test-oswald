@@ -5,9 +5,6 @@ using UnityEngine;
 
 public class SceneManager : BaseService<ISceneManager>, ISceneManager
 {
-    [SerializeField] private int _menuSceneIndex;
-    [SerializeField] private int _hudSceneIndex;
-
     void Start()
     {
         EventBus.OnOpenMainMenu += LoadMenuScene;
@@ -16,17 +13,12 @@ public class SceneManager : BaseService<ISceneManager>, ISceneManager
 
     private void LoadMenuScene ()
     {
-        LoadScene(_menuSceneIndex);
+        LoadScene(ScenesIndexing.SCENE_MENU);
     }
 
     private void ReloadCurrentScene ()
     {
         LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
-    }
-
-    public void LoadHUDScreen (Action onComplete = null)
-    {
-        LoadSceneAdditive(_hudSceneIndex, onComplete);
     }
 
     public void LoadScene(int sceneIndex, Action onComplete = null)
@@ -76,6 +68,6 @@ public class SceneManager : BaseService<ISceneManager>, ISceneManager
 
     public bool IsInMainMenu()
     {
-        return UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex == _menuSceneIndex;
+        return UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex == ScenesIndexing.SCENE_MENU;
     }
 }

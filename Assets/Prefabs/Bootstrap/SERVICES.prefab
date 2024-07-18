@@ -513,6 +513,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _menuSceneIndex: 0
+  _gameSceneIndex: 1
   _hudSceneIndex: 2
 --- !u!1 &6695110054727802501
 GameObject:

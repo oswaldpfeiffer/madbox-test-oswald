@@ -18,6 +18,16 @@ public class InputsManager : BaseService<IInputsManager>, IInputsManager
         _virtualJoystick = joystick;
     }
 
+    public void RemoveVirtualJoystick()
+    {
+        _virtualJoystick = null;
+    }
+
+    public void RemoveControlable ()
+    {
+        _controlable = null;
+    }
+
     void Update()
     {
         HandleTouchMouseInputs();

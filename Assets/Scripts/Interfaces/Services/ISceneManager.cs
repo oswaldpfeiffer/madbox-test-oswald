@@ -6,5 +6,4 @@ public interface ISceneManager : IService
     void LoadSceneAdditive(int sceneIndex, System.Action onComplete = null);
     void UnloadScene(int sceneIndex, System.Action onComplete = null);
     bool IsInMainMenu();
-    void LoadHUDScreen(Action onComplete = null);
 }

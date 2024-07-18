@@ -67,6 +67,7 @@ public class HeroView : MonoBehaviour, IHeroView
     public void PlayDieAnimation()
     {
         _blinker.Blink();
+        AnimatorUtil.ResetAnimatorTriggers(_animator);
         _animator.SetTrigger(AnimatorParameters.HERO_DIE);
     }
 

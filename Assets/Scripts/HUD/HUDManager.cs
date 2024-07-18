@@ -13,11 +13,14 @@ public class HUDManager : SingletonBaseClass<HUDManager>
 
     [SerializeField] private Image _weaponSprite;
 
+    private IInputsManager _inputManager;
+
     // Start is called before the first frame update
     void Start()
     {
         _virtualJoystick = _virtualJoystickHolder.GetComponent(typeof(IVirtualJoystick)) as IVirtualJoystick;
-        ServiceLocator.Instance.GetService<IInputsManager>().SetVirtualJoystick(_virtualJoystick);
+        _inputManager = ServiceLocator.Instance.GetService<IInputsManager>();
+        _inputManager.SetVirtualJoystick(_virtualJoystick);
 
         _playerHealthBar = _playerHealthBarHolder.GetComponent(typeof(IHealthBar)) as IHealthBar;
     }
@@ -32,6 +35,7 @@ public class HUDManager : SingletonBaseClass<HUDManager>
     {
         EventBus.OnWeaponEquipped -= DisplayWeapon;
         EventBus.OnPlayerInitialized -= PlayerInitialized;
+        _inputManager.RemoveVirtualJoystick();
     }
 
     private void PlayerInitialized()

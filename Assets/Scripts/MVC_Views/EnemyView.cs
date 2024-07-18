@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
+using System;
 
 public class EnemyView : MonoBehaviour, IEnemyView
 {
@@ -13,6 +15,8 @@ public class EnemyView : MonoBehaviour, IEnemyView
     [SerializeField] GameObject HealthBarPrefab;
     public IHealthBar HealthBar { get; set; }
 
+    private Sequence _moveSeq;
+
     public void Initialize()
     {
         MoveableTransform = GetComponent<Transform>();
@@ -23,8 +27,16 @@ public class EnemyView : MonoBehaviour, IEnemyView
         }
     }
 
+    public void StartReachTarget(Vector3 target, float duration, Action onCompleteCallback)
+    {
+        _animator.SetTrigger(AnimatorParameters.ENEMY_BEE_MOVE);
+        _moveSeq.Kill();
+        MoveableTransform.DOMove(target, duration).SetEase(Ease.Linear).OnComplete(() => onCompleteCallback?.Invoke());
+    }
+
     public void LookAtHero(IHeroController hero)
     {
+        _animator.SetTrigger(AnimatorParameters.ENEMY_BEE_IDLE);
         if (hero != null)
         {
             _rotatingTransform.LookAt(hero.GetPositionTransform());
@@ -43,12 +55,14 @@ public class EnemyView : MonoBehaviour, IEnemyView
 
     public void PlayHitAnimation()
     {
+        _moveSeq.Kill();
         _animator.SetTrigger(AnimatorParameters.ENEMY_BEE_DAMAGE);
         _blinker.Blink();
     }
 
     public void PlayDieAnimation()
     {
+        _moveSeq.Kill();
         _animator.SetTrigger(AnimatorParameters.ENEMY_BEE_DIE);
         _blinker.Blink();
     }
@@ -56,5 +70,11 @@ public class EnemyView : MonoBehaviour, IEnemyView
     private bool IsMeshVisible ()
     {
         return _skinnedMeshRenderer.isVisible;
+    }
+
+    public void Attack(IHeroController hero)
+    {
+        _rotatingTransform.LookAt(hero.GetPositionTransform());
+        _animator.SetTrigger(AnimatorParameters.ENEMY_BEE_ATTACK);
     }
 }

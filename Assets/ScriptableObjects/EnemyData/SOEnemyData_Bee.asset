@@ -15,4 +15,8 @@ MonoBehaviour:
   PrefabAddressable: Enemy_Bee
   HealthSO: {fileID: 11400000, guid: 0a8bb4d5bef82e746a5deb6f79832960, type: 2}
   AttackForce: 20
-  AttackFrequency: 2
+  AttackFrequency: 2.5
+  MoveSpeed: 3
+  MoveDistance: 7
+  AttackDistance: 1.2
+  OffsetDistance: 1

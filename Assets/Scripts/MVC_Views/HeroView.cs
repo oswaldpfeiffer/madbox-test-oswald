@@ -8,6 +8,7 @@ public class HeroView : MonoBehaviour, IHeroView
     [SerializeField] Transform _rotatingTransform;
     [SerializeField] Transform _weaponSlot;
     [SerializeField] HitSpawner _hitSpawner;
+    [SerializeField] Blinker _blinker;
 
     public Transform MoveableTransform { get ; set; }
 
@@ -60,12 +61,13 @@ public class HeroView : MonoBehaviour, IHeroView
 
     public void PlayHitAnimation ()
     {
-        
+        _blinker.Blink();
     }
 
     public void PlayDieAnimation()
     {
-
+        _blinker.Blink();
+        _animator.SetTrigger(AnimatorParameters.HERO_DIE);
     }
 
     public void SpawnDamageHit (IDamageableController controller, SOHeroWeapon weapon)

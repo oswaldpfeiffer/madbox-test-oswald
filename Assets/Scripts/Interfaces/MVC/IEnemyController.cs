@@ -1,4 +1,4 @@
 public interface IEnemyController : IController, IDamageableController
 {
-    void Initialize(IHeroController hero, IEnemyModel model, SOHealth health);
+    void Initialize(IHeroController hero, IEnemyModel model, SOEnemyData enemyData);
 }

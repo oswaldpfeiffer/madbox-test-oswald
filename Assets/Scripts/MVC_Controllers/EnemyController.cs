@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,10 +13,58 @@ public class EnemyController : MonoBehaviour, IEnemyController
     {
         if (_model.IsAlive)
         {
-            _view.LookAtHero(_hero);
+            bool isCloseToPlayer = DistanceToPosition(_hero.GetPositionTransform().position) < _model.EnemyData.MoveDistance;
+            if (isCloseToPlayer) {
+                ActiveLogic();
+            } else
+            {
+                PassiveLogic();
+            }
             _view.UpdateHealthBar(_model.Health / _model.MaxHealth);
         }
     }
+
+    private void ActiveLogic ()
+    {
+        if (_model.EnemyState == EEnemyState.setTarget)
+        {
+            _model.SetMoveTarget(GetPositionTransform().position, _hero.GetPositionTransform().position);
+            _view.StartReachTarget(GetPositionTransform().position + _model.GetMoveTarget(), _model.GetReachTargetDuration(), TargetReached);
+            _model.EnemyState = EEnemyState.move;
+        }
+    }
+
+    private void TargetReached()
+    {
+        if (DistanceToPosition(_hero.GetPositionTransform().position) < _model.EnemyData.AttackDistance)
+        {
+            _view.Attack(_hero);
+            _hero.TakeDamage(_model.EnemyData.AttackForce);
+        }
+        StartCoroutine(ResumeStateDelay());
+    }
+
+    private IEnumerator ResumeStateDelay ()
+    {
+        WaitForSeconds wfs = new WaitForSeconds(_model.EnemyData.AttackFrequency);
+        yield return wfs;
+        if (_model.IsAlive)
+        {
+            _model.SetMoveTarget(GetPositionTransform().position, _hero.GetPositionTransform().position);
+            _model.EnemyState = EEnemyState.setTarget;
+        }
+    }
+
+    private void PassiveLogic ()
+    {
+        _view.LookAtHero(_hero);
+    }
+
+    private float DistanceToPosition (Vector3 position)
+    {
+        return (position - GetPositionTransform().position).magnitude;
+    }
+
     public Transform GetPositionTransform()
     {
         return _view.MoveableTransform;
@@ -39,13 +88,15 @@ public class EnemyController : MonoBehaviour, IEnemyController
         throw new System.NotImplementedException();
     }
 
-    public void Initialize(IHeroController hero, IEnemyModel model, SOHealth health)
+    public void Initialize(IHeroController hero, IEnemyModel model, SOEnemyData enemyData)
     {
         _model = model;
         _view = GetComponent(typeof(IEnemyView)) as IEnemyView;
         _view.Initialize();
         _hero = hero;
-        InitLife(health);
+        _model.EnemyData = enemyData;
+        InitLife(enemyData.HealthSO);
+        _model.EnemyState = EEnemyState.setTarget;
     }
 
     public void InitLife(SOHealth health)

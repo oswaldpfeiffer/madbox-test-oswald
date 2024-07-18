@@ -10,6 +10,10 @@ public static class AnimatorParameters
     public const string HERO_ATTACK = "Attack";
     public const string HERO_ATTACKSPEEDFACTOR = "AttackSpeedFactor";
     public const string HERO_MOVESPEEDFACTOR = "MoveSpeedFactor";
+    public const string HERO_DIE = "Die";
     public const string ENEMY_BEE_DAMAGE = "Damage";
     public const string ENEMY_BEE_DIE = "Die";
+    public const string ENEMY_BEE_MOVE = "Move";
+    public const string ENEMY_BEE_ATTACK = "Attack";
+    public const string ENEMY_BEE_IDLE = "Idle";
 }

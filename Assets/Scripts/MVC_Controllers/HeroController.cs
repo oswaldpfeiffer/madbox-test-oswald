@@ -23,6 +23,7 @@ public class HeroController : MonoBehaviour, IHeroController
     {
         if (_model == null) return;
         if (_model.IsMoving) return;
+        if (!_model.IsAlive) return;
         if (Time.time < (_model.LastAttackTime + _model.EquippedWeapon.AttackCoolDown)) return;
         _closestEnemy = _levelManager.GetClosestEnemy(_view.MoveableTransform.position);
         if (_closestEnemy != null && _model.IsEnemyInRange(GetPositionTransform(), _closestEnemy))
@@ -34,6 +35,8 @@ public class HeroController : MonoBehaviour, IHeroController
     public void Die()
     {
         _model.IsAlive = false;
+        _view.PlayDieAnimation();
+        EventBus.TriggerLevelFail();
     }
 
     public bool IsAlive()
@@ -94,12 +97,14 @@ public class HeroController : MonoBehaviour, IHeroController
 
     public void SetIsMoving(bool moving)
     {
+        if (!_model.IsAlive) return;
         _model.IsMoving = moving;
         _view.SetMovement(moving);
     }
 
     public void SetMovementDirection(float x, float y)
     {
+        if (!_model.IsAlive) return;
         Vector3 moveVector = _model.GetMoveVector(x, y);
         float lookAngle = _model.GetLookAngle(x, y);
         _view.Move(moveVector, lookAngle);
@@ -113,6 +118,9 @@ public class HeroController : MonoBehaviour, IHeroController
         if (_model.Health <= 0)
         {
             Die();
+        } else
+        {
+            _view.PlayHitAnimation();
         }
     }
 

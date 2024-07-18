@@ -587,8 +587,21 @@ PlayerSettings:
   webGLThreadsSupport: 0
   webGLDecompressionFallback: 0
   scriptingDefineSymbols:
-    1: LETAI_TRUESHADOW
-    7: LETAI_TRUESHADOW
+    1: LETAI_TRUESHADOW;DOTWEEN
+    4: DOTWEEN
+    7: LETAI_TRUESHADOW;DOTWEEN
+    13: DOTWEEN
+    14: DOTWEEN
+    19: DOTWEEN
+    21: DOTWEEN
+    25: DOTWEEN
+    27: DOTWEEN
+    28: DOTWEEN
+    29: DOTWEEN
+    30: DOTWEEN
+    31: DOTWEEN
+    32: DOTWEEN
+    33: DOTWEEN
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:

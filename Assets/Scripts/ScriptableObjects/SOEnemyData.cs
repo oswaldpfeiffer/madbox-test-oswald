@@ -10,5 +10,7 @@ public class SOEnemyData : ScriptableObject
     public int AttackForce;
     public float AttackFrequency;
     public float MoveSpeed;
+    public float MoveDistance;
     public float AttackDistance;
+    public float OffsetDistance;
 }

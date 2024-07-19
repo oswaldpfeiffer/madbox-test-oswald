@@ -30,10 +30,14 @@ public class InputsManager : BaseService<IInputsManager>, IInputsManager
 
     void Update()
     {
-        HandleTouchMouseInputs();
+#if UNITY_EDITOR
+        HandleMouseInputs();
+#else
+        HandleTouchInputs();
+#endif
     }
 
-    public void HandleTouchMouseInputs ()
+    private void HandleMouseInputs ()
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -58,6 +62,54 @@ public class InputsManager : BaseService<IInputsManager>, IInputsManager
                 Vector3 delta = newPos - _refPosition;
                 _controlable.SetMovementDirection(-delta.x, -delta.y);
                 if (_virtualJoystick != null) _virtualJoystick.UpdateStickPosition(delta);
+            }
+        }
+    }
+
+    private void HandleTouchInputs()
+    {
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+
+            switch (touch.phase)
+            {
+                case TouchPhase.Began:
+                    _refPosition = touch.position;
+                    if (_controlable != null) _controlable.SetIsMoving(true);
+                    if (_virtualJoystick != null)
+                    {
+                        _virtualJoystick.AnchorJoystick(touch.position);
+                        _virtualJoystick.DisplayJoystick(true);
+                    }
+                    break;
+
+                case TouchPhase.Ended:
+                    if (_controlable != null) _controlable.SetIsMoving(false);
+                    if (_virtualJoystick != null) _virtualJoystick.DisplayJoystick(false);
+                    break;
+                case TouchPhase.Canceled:
+                    if (_controlable != null) _controlable.SetIsMoving(false);
+                    if (_virtualJoystick != null) _virtualJoystick.DisplayJoystick(false);
+                    break;
+                case TouchPhase.Moved:
+                    if (_controlable != null)
+                    {
+                        Vector3 newPos = touch.position;
+                        Vector3 delta = newPos - _refPosition;
+                        _controlable.SetMovementDirection(-delta.x, -delta.y);
+                        if (_virtualJoystick != null) _virtualJoystick.UpdateStickPosition(delta);
+                    }
+                    break;
+                case TouchPhase.Stationary:
+                    if (_controlable != null)
+                    {
+                        Vector3 newPos = touch.position;
+                        Vector3 delta = newPos - _refPosition;
+                        _controlable.SetMovementDirection(-delta.x, -delta.y);
+                        if (_virtualJoystick != null) _virtualJoystick.UpdateStickPosition(delta);
+                    }
+                    break;
             }
         }
     }

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PrefabAddressable: CurvedSword
   Preview: {fileID: 21300000, guid: 6a3250ecbd8e33c4191a059a0925d76e, type: 3}
-  Damages: 10
+  Damages: 12
   AttackSpeedFactor: 1.5
   AttackCoolDown: 0.7
   MovementSpeedFactor: 1.2

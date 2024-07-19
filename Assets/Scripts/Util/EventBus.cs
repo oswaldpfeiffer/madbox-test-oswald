@@ -14,6 +14,7 @@ public static class EventBus
     public static event Action OnPlayerInitialized;
     public static event Action<IHealthBar> OnPlayerHealthBarLoaded;
     public static event Action<SOHeroWeapon> OnWeaponEquipped;
+    public static event Action<int> OnEnemyKilled;
 
     public static void TriggerGameStateChanged(EGameState state)
     {
@@ -50,6 +51,11 @@ public static class EventBus
     public static void TriggerOnPlayerInitialized()
     {
         OnPlayerInitialized?.Invoke();
+    }
+
+    public static void TriggerOnEnemyKilled(int score)
+    {
+        OnEnemyKilled?.Invoke(score);
     }
     /*
     // Generic events alternative, more practical but less explicit...

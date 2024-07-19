@@ -12,8 +12,6 @@ public class HeroController : MonoBehaviour, IHeroController
     private IEnemyController _closestEnemy;
     private IAudioManager _audioManager;
 
-
-
     void Update ()
     {
         CheckNearbyEnemies();

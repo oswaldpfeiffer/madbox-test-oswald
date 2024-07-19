@@ -19,3 +19,4 @@ MonoBehaviour:
   MoveSpeed: 2
   AttackRange: 10
   MinDistanceToPlayer: 3
+  ScorePerKill: 10

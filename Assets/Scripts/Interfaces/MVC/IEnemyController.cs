@@ -1,4 +1,4 @@
 public interface IEnemyController : IController, IDamageableController
 {
-    void Initialize(IHeroController hero, IEnemyModel model, SOEnemyData enemyData);
+    void Initialize(IHeroController hero, IEnemyModel model, SOEnemyData enemyData, IAudioManager audioManager);
 }

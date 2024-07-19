@@ -11,12 +11,14 @@ public class EnemiesManager : MonoBehaviour, IEnemiesManager
     [SerializeField] private float _maxRecursionsForEnemiesSpawnPosition;
 
     private ILogger _logger;
+    private IAudioManager _audioManager;
 
     private Dictionary<string, GameObject> _enemyPrefabs = new Dictionary<string, GameObject>();
 
     public void Initialize (SOLevelData levelData, Action onInitializationComplete)
     {
         _logger = ServiceLocator.Instance.GetService<ILogger>();
+        _audioManager = ServiceLocator.Instance.GetService<IAudioManager>();
 
         string key = levelData.EnemySO.PrefabAddressable;
         Addressables.LoadAssetAsync<GameObject>(key).Completed += handle =>
@@ -64,7 +66,7 @@ public class EnemiesManager : MonoBehaviour, IEnemiesManager
                 GameObject go = Instantiate(enemy, pos, Quaternion.identity, null);
                 IEnemyController controller = go.GetComponent(typeof(IEnemyController)) as IEnemyController;
                 IEnemyModel model = new EnemyModel();
-                controller.Initialize(hero, model, levelData.EnemySO);
+                controller.Initialize(hero, model, levelData.EnemySO, _audioManager);
                 enemies.Add(controller);
             }
         }

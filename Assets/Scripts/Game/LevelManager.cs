@@ -21,8 +21,12 @@ public class LevelManager : MonoBehaviour, ILevelManager
     private SOLevelData _levelData;
     private List<IEnemyController> _enemies;
 
+    private int _enemiesLeft;
+
     private void Start()
     {
+        EventBus.OnEnemyKilled += EnemyKilled;
+
         _enemiesManager = GetComponent(typeof(IEnemiesManager)) as IEnemiesManager;
         _weaponsManager = GetComponent(typeof(IWeaponsManager)) as IWeaponsManager;
         _sceneManager = ServiceLocator.Instance.GetService<ISceneManager>();
@@ -33,7 +37,17 @@ public class LevelManager : MonoBehaviour, ILevelManager
 
     void OnDisable ()
     {
+        EventBus.OnEnemyKilled -= EnemyKilled;
         _inputsManager.RemoveControlable();
+    }
+
+    private void EnemyKilled(int score)
+    {
+        _enemiesLeft--;
+        if (_enemiesLeft <= 0)
+        {
+            EventBus.TriggerLevelWin();
+        }
     }
 
     private void OnHUDLoaded ()
@@ -75,6 +89,7 @@ public class LevelManager : MonoBehaviour, ILevelManager
     private void SpawnEnemies()
     {
         _enemies = _enemiesManager.SpawnEnemies(_heroController, _levelData);
+        _enemiesLeft = _enemies.Count;
     }
 
     public IEnemyController GetClosestEnemy(Vector3 position)

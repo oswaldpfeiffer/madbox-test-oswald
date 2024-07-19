@@ -8,6 +8,7 @@ public class EnemyController : MonoBehaviour, IEnemyController
     private IHeroController _hero;
     private IEnemyView _view;
     private IEnemyModel _model;
+    private IAudioManager _audioManager;
 
     void Update ()
     {
@@ -58,6 +59,8 @@ public class EnemyController : MonoBehaviour, IEnemyController
         _model.IsAlive = false;
         _view.PlayDieAnimation();
         _view.UpdateHealthBar(0f);
+        EventBus.TriggerOnEnemyKilled(_model.EnemyData.ScorePerKill);
+        _audioManager.PlayAudioClip(EAudioClip.BeeDeath);
         Destroy(this.gameObject, 3f);
     }
 
@@ -71,8 +74,9 @@ public class EnemyController : MonoBehaviour, IEnemyController
         throw new System.NotImplementedException();
     }
 
-    public void Initialize(IHeroController hero, IEnemyModel model, SOEnemyData enemyData)
+    public void Initialize(IHeroController hero, IEnemyModel model, SOEnemyData enemyData, IAudioManager audioManager)
     {
+        _audioManager = audioManager;
         _model = model;
         _view = GetComponent(typeof(IEnemyView)) as IEnemyView;
         _view.Initialize();

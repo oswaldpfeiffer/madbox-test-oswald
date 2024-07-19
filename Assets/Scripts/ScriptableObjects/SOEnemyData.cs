@@ -13,4 +13,6 @@ public class SOEnemyData : ScriptableObject
     public float AttackRange;
     public float MinDistanceToPlayer;
     public int ScorePerKill;
+    [Range(0f, 1f)]
+    public float WeaponDropRate;
 }

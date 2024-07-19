@@ -9,6 +9,7 @@ public class SceneManager : BaseService<ISceneManager>, ISceneManager
     {
         EventBus.OnOpenMainMenu += LoadMenuScene;
         EventBus.OnTryAgainLevel += ReloadCurrentScene;
+        EventBus.OnNextLevel += ReloadCurrentScene;
     }
 
     private void LoadMenuScene ()

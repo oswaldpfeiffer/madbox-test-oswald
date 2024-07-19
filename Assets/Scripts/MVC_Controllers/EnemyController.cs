@@ -61,7 +61,18 @@ public class EnemyController : MonoBehaviour, IEnemyController
         _view.UpdateHealthBar(0f);
         EventBus.TriggerOnEnemyKilled(_model.EnemyData.ScorePerKill);
         _audioManager.PlayAudioClip(EAudioClip.BeeDeath);
-        Destroy(this.gameObject, 3f);
+        StartCoroutine(DestroyDelay());
+    }
+
+    private IEnumerator DestroyDelay ()
+    {
+        WaitForSeconds wfs = new WaitForSeconds(3);
+        yield return wfs;
+        if (UnityEngine.Random.Range(0f, 1f) <= _model.EnemyData.WeaponDropRate)
+        {
+            _view.DropItem();
+        }
+        Destroy(this.gameObject);
     }
 
     public bool IsAlive ()
@@ -74,7 +85,7 @@ public class EnemyController : MonoBehaviour, IEnemyController
         throw new System.NotImplementedException();
     }
 
-    public void Initialize(IHeroController hero, IEnemyModel model, SOEnemyData enemyData, IAudioManager audioManager)
+    public void Initialize(IHeroController hero, IEnemyModel model, SOEnemyData enemyData, IAudioManager audioManager, IWeaponsManager weaponManager)
     {
         _audioManager = audioManager;
         _model = model;
@@ -84,6 +95,7 @@ public class EnemyController : MonoBehaviour, IEnemyController
         _model.EnemyData = enemyData;
         InitLife(enemyData.HealthSO);
         _model.EnemyState = EEnemyState.setTarget;
+        _view.InitializeDrop(weaponManager);
     }
 
     public void InitLife(SOHealth health)

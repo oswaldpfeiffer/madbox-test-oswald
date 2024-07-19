@@ -20,3 +20,4 @@ MonoBehaviour:
   AttackRange: 10
   MinDistanceToPlayer: 3
   ScorePerKill: 10
+  WeaponDropRate: 0.374

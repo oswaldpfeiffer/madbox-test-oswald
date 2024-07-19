@@ -15,11 +15,13 @@ public class EnemyView : MonoBehaviour, IEnemyView
     public IHealthBar HealthBar { get; set; }
 
     private IProjectileSpawner _projectileSpawner;
+    private IDropSpawner _dropSpawner;
 
     public void Initialize()
     {
         MoveableTransform = GetComponent<Transform>();
         _projectileSpawner = GetComponent(typeof(IProjectileSpawner)) as IProjectileSpawner;
+        _dropSpawner = GetComponent(typeof(IDropSpawner)) as IDropSpawner;
         if (HealthBarPrefab)
         {
             GameObject health = Instantiate(HealthBarPrefab, this.transform);
@@ -73,5 +75,15 @@ public class EnemyView : MonoBehaviour, IEnemyView
     {
         _projectileSpawner.Shoot(damages);
         _animator.SetTrigger(AnimatorParameters.ENEMY_BEE_ATTACK);
+    }
+
+    public void DropItem()
+    {
+        _dropSpawner.DropWeapon();
+    }
+
+    public void InitializeDrop(IWeaponsManager weaponManager)
+    {
+        _dropSpawner.Initialize(weaponManager);
     }
 }

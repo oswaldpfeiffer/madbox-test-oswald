@@ -88,7 +88,7 @@ public class LevelManager : MonoBehaviour, ILevelManager
 
     private void SpawnEnemies()
     {
-        _enemies = _enemiesManager.SpawnEnemies(_heroController, _levelData);
+        _enemies = _enemiesManager.SpawnEnemies(_heroController, _levelData, _weaponsManager);
         _enemiesLeft = _enemies.Count;
     }
 

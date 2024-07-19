@@ -6,4 +6,6 @@ public interface IEnemyView : IView, IDamageableView
     void LookAtHero(IHeroController hero);
     void AddMoveVector(Vector3 v);
     void Attack(float damages);
+    void DropItem();
+    void InitializeDrop(IWeaponsManager weaponManager);
 }

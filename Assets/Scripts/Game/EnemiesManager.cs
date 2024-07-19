@@ -40,7 +40,7 @@ public class EnemiesManager : MonoBehaviour, IEnemiesManager
         }
     }
 
-    public List<IEnemyController> SpawnEnemies(IHeroController hero, SOLevelData levelData)
+    public List<IEnemyController> SpawnEnemies(IHeroController hero, SOLevelData levelData, IWeaponsManager weaponsManager)
     {
         List<Vector3> spawnedEnemyPositions = new List<Vector3>();
         List<IEnemyController> enemies = new List<IEnemyController>();
@@ -66,7 +66,7 @@ public class EnemiesManager : MonoBehaviour, IEnemiesManager
                 GameObject go = Instantiate(enemy, pos, Quaternion.identity, null);
                 IEnemyController controller = go.GetComponent(typeof(IEnemyController)) as IEnemyController;
                 IEnemyModel model = new EnemyModel();
-                controller.Initialize(hero, model, levelData.EnemySO, _audioManager);
+                controller.Initialize(hero, model, levelData.EnemySO, _audioManager, weaponsManager);
                 enemies.Add(controller);
             }
         }

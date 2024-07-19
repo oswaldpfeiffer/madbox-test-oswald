@@ -30,6 +30,7 @@ public class HeroController : MonoBehaviour, IHeroController
         }
     }
 
+    
     public void Die()
     {
         _model.IsAlive = false;

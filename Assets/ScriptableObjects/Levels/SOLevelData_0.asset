@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SOLevelData_0
   m_EditorClassIdentifier: 
   EnemySO: {fileID: 11400000, guid: b6562650268bdda45baef1ce1fff3656, type: 2}
-  EnemiesAmount: 5
+  EnemiesAmount: 20
   MinXSpawn: 5
   MaxXSpawn: 20
   MinYSpawn: 5

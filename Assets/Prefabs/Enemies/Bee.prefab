@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6987307172062759776}
   - component: {fileID: 2903861867956608113}
   - component: {fileID: 833607934646524945}
+  - component: {fileID: 70892456355252493}
   m_Layer: 0
   m_Name: Bee
   m_TagString: Untagged
@@ -92,6 +93,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _projectilePrefab: {fileID: 4398546190907399519, guid: d0b3db34b82784a7aa21a3d5dadb2d49, type: 3}
   _shootPosition: {fileID: 8015468811099033224}
+--- !u!114 &70892456355252493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1358921057130329688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e57985147782e464e8561451683dd5ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _weaponDropPrefab: {fileID: 284833476155336770, guid: 64e889b22e29748d2bb7cc454144c909, type: 3}
 --- !u!1 &6926839794863368101
 GameObject:
   m_ObjectHideFlags: 0

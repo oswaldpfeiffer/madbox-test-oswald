@@ -7,10 +7,9 @@ public class SOEnemyData : ScriptableObject
 {
     public string PrefabAddressable;
     public SOHealth HealthSO;
-    public int AttackForce;
-    public float AttackFrequency;
+    public int Damages;
+    public float AttackCooldown;
     public float MoveSpeed;
-    public float MoveDistance;
-    public float AttackDistance;
-    public float OffsetDistance;
+    public float AttackRange;
+    public float MinDistanceToPlayer;
 }

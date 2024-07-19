@@ -13,51 +13,34 @@ public class EnemyController : MonoBehaviour, IEnemyController
     {
         if (_model.IsAlive)
         {
-            bool isCloseToPlayer = DistanceToPosition(_hero.GetPositionTransform().position) < _model.EnemyData.MoveDistance;
-            if (isCloseToPlayer) {
-                ActiveLogic();
-            } else
-            {
-                PassiveLogic();
-            }
+            _view.LookAtHero(_hero);
             _view.UpdateHealthBar(_model.Health / _model.MaxHealth);
+
+            float dist = DistanceToPosition(_hero.GetPositionTransform().position);
+            if (dist <= _model.EnemyData.AttackRange)
+            {
+                AttackLogic();
+                if (dist >= _model.EnemyData.MinDistanceToPlayer)
+                {
+                    MoveLogic();
+                }
+            }
         }
     }
 
-    private void ActiveLogic ()
+
+    private void AttackLogic ()
     {
-        if (_model.EnemyState == EEnemyState.setTarget)
-        {
-            _model.SetMoveTarget(GetPositionTransform().position, _hero.GetPositionTransform().position);
-            _view.StartReachTarget(GetPositionTransform().position + _model.GetMoveTarget(), _model.GetReachTargetDuration(), TargetReached);
-            _model.EnemyState = EEnemyState.move;
-        }
+        if (Time.time < (_model.LastAttackTime + _model.EnemyData.AttackCooldown)) return;
+        _view.Attack(_model.EnemyData.Damages);
+        _model.LastAttackTime = Time.time;
     }
 
-    private void TargetReached()
+    private void MoveLogic ()
     {
-        if (DistanceToPosition(_hero.GetPositionTransform().position) < _model.EnemyData.AttackDistance)
-        {
-            _view.Attack(_hero);
-            _hero.TakeDamage(_model.EnemyData.AttackForce);
-        }
-        StartCoroutine(ResumeStateDelay());
-    }
-
-    private IEnumerator ResumeStateDelay ()
-    {
-        WaitForSeconds wfs = new WaitForSeconds(_model.EnemyData.AttackFrequency);
-        yield return wfs;
-        if (_model.IsAlive)
-        {
-            _model.SetMoveTarget(GetPositionTransform().position, _hero.GetPositionTransform().position);
-            _model.EnemyState = EEnemyState.setTarget;
-        }
-    }
-
-    private void PassiveLogic ()
-    {
-        _view.LookAtHero(_hero);
+        Vector3 diff = _hero.GetPositionTransform().position - GetPositionTransform().position;
+        diff = diff.normalized * _model.EnemyData.MoveSpeed * Time.deltaTime;
+        _view.AddMoveVector(diff);
     }
 
     private float DistanceToPosition (Vector3 position)

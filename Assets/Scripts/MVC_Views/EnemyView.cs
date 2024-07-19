@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
 using System;
 
 public class EnemyView : MonoBehaviour, IEnemyView
@@ -15,11 +14,12 @@ public class EnemyView : MonoBehaviour, IEnemyView
     [SerializeField] GameObject HealthBarPrefab;
     public IHealthBar HealthBar { get; set; }
 
-    private Sequence _moveSeq;
+    private IProjectileSpawner _projectileSpawner;
 
     public void Initialize()
     {
         MoveableTransform = GetComponent<Transform>();
+        _projectileSpawner = GetComponent(typeof(IProjectileSpawner)) as IProjectileSpawner;
         if (HealthBarPrefab)
         {
             GameObject health = Instantiate(HealthBarPrefab, this.transform);
@@ -27,11 +27,9 @@ public class EnemyView : MonoBehaviour, IEnemyView
         }
     }
 
-    public void StartReachTarget(Vector3 target, float duration, Action onCompleteCallback)
+    public void AddMoveVector(Vector3 v)
     {
-        _animator.SetTrigger(AnimatorParameters.ENEMY_BEE_MOVE);
-        _moveSeq.Kill();
-        MoveableTransform.DOMove(target, duration).SetEase(Ease.Linear).OnComplete(() => onCompleteCallback?.Invoke());
+        MoveableTransform.position += v;
     }
 
     public void LookAtHero(IHeroController hero)
@@ -55,14 +53,13 @@ public class EnemyView : MonoBehaviour, IEnemyView
 
     public void PlayHitAnimation()
     {
-        _moveSeq.Kill();
         _animator.SetTrigger(AnimatorParameters.ENEMY_BEE_DAMAGE);
         _blinker.Blink();
     }
 
     public void PlayDieAnimation()
     {
-        _moveSeq.Kill();
+        AnimatorUtil.ResetAnimatorTriggers(_animator);
         _animator.SetTrigger(AnimatorParameters.ENEMY_BEE_DIE);
         _blinker.Blink();
     }
@@ -72,9 +69,9 @@ public class EnemyView : MonoBehaviour, IEnemyView
         return _skinnedMeshRenderer.isVisible;
     }
 
-    public void Attack(IHeroController hero)
+    public void Attack(float damages)
     {
-        _rotatingTransform.LookAt(hero.GetPositionTransform());
+        _projectileSpawner.Shoot(damages);
         _animator.SetTrigger(AnimatorParameters.ENEMY_BEE_ATTACK);
     }
 }

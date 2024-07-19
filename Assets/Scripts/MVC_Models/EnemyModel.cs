@@ -8,24 +8,5 @@ public class EnemyModel : IEnemyModel
     public SOEnemyData EnemyData { get; set; }
     public EEnemyState EnemyState { get; set; }
 
-    private Vector3 _target = Vector3.zero;
-    private float _targetDist = 0f;
-
-    public Vector3 GetMoveTarget()
-    {
-        return _target;
-    }
-
-    public void SetMoveTarget(Vector3 currentPosition, Vector3 heroPosition)
-    {
-        Vector3 diff = heroPosition - currentPosition;
-        diff -= (diff.normalized * EnemyData.OffsetDistance);
-        _target = diff;
-        _targetDist = diff.magnitude;
-    }
-
-    public float GetReachTargetDuration()
-    {
-        return _targetDist / EnemyData.MoveSpeed;
-    }
+    public float LastAttackTime { get; set; }
 }
